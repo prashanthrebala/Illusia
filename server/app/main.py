@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
-from dummyData import RESPONSE
+from utils.dummyData import RESPONSE
 import requests
-from config import (
+from utils.config import (
     IMAGE_GENERATION_ENDPOINT,
     X_RAPID_API_KEY,
     X_RAPID_API_HOST,
