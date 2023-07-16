@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+MONGO_URL = os.environ.get("MONGO_URL")
 IMAGE_GENERATION_ENDPOINT = os.environ.get("IMAGE_GENERATION_ENDPOINT")
 X_RAPID_API_KEY = os.environ.get("X_RAPID_API_KEY")
 X_RAPID_API_HOST = os.environ.get("X_RAPID_API_HOST")
