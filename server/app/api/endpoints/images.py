@@ -8,9 +8,12 @@ from utils.config import (
 )
 import requests
 import httpx
-
+from models.post import Post
+from utils.dummyData import RESPONSE
 
 router = APIRouter(prefix="/images")
+
+OPENAI = False
 
 
 @router.post("/create")
@@ -35,7 +38,33 @@ async def create_image(request: Request):
         "size": DEFAULT_IMAGE_SIZE
     }
 
+    if OPENAI:
+        print("obtaining response from open ai")
+        response = requests.post(
+            url=IMAGE_GENERATION_ENDPOINT, headers=headers, json=payload)
+
+        response_json = response.json()
+    else:
+        print("obtaining local response")
+        response_json = RESPONSE
+
+    generated_image_url = response_json["data"][0]["url"]
+    print(generated_image_url)
+
     # use httpx to make a call to the server itself
     async with httpx.AsyncClient() as client:
-        response = await client.get("http://localhost:8001/")
-    return response.json()
+        # upload image to imagekit
+        imagekit_response = await client.post(
+            "http://localhost:8001/imagekit/upload",
+            json={"imageUrl": generated_image_url}
+        )
+
+        imagekit_response_json = imagekit_response.json()
+        # create post in mongodb
+        post = Post(imagekit_response_json["url"], description=prompt)
+        post.save_to_collection()
+
+    return {
+        "imageUrl": imagekit_response_json["url"],
+        "description": prompt
+    }
