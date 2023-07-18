@@ -63,7 +63,7 @@ async def create_image(request: Request):
 
         # create post in mongodb
         create_post_response = await client.post(
-            "http://localhost:8001/posts",
+            "http://localhost:8001/posts/",
             json={
                 "imageUrl": imagekit_response_json["url"], "description": prompt}
         )
