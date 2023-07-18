@@ -60,9 +60,13 @@ async def create_image(request: Request):
         )
 
         imagekit_response_json = imagekit_response.json()
+
         # create post in mongodb
-        post = Post(imagekit_response_json["url"], description=prompt)
-        post.save_to_collection()
+        create_post_response = await client.post(
+            "http://localhost:8001/posts",
+            json={
+                "imageUrl": imagekit_response_json["url"], "description": prompt}
+        )
 
     return {
         "imageUrl": imagekit_response_json["url"],
