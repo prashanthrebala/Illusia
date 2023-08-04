@@ -1,11 +1,11 @@
 <template>
-	<div>
+	<div class="w-full flex justify-center">
 		<div v-if="loading">Loading...</div>
-		<ul v-else>
-			<li v-for="item in data" :key="item._id">
+		<div v-else class="w-full grid-container">
+			<div v-for="item in data" :key="item._id">
 				<ImageCard :imageUrl="item.imageUrl" :description="item.description" />
-			</li>
-		</ul>
+			</div>
+		</div>
 		<div v-if="error">{{ error }}</div>
 	</div>
 </template>

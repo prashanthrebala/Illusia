@@ -24,3 +24,10 @@ body {
 	width: 100%;
 	background-color: black;
 }
+
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 24rem);
+	grid-gap: 4rem;
+	justify-content: center;
+}
