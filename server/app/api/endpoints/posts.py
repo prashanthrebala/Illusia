@@ -1,15 +1,15 @@
 from fastapi import APIRouter, Request
 from models.connection import db
 from models.post import Post
-import json
 
 router = APIRouter(prefix="/posts")
 
 
 @router.get("/")
 def get_post():
-    result = db["posts"].find({})
-    return json.dumps(list(result))
+    result = db["posts"].find({}, {"_id": 0})
+    data = [item for item in result]
+    return data
 
 
 @router.post("/")
