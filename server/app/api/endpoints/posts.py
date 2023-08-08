@@ -7,7 +7,7 @@ router = APIRouter(prefix="/posts")
 
 @router.get("/")
 def get_post():
-    result = db["posts"].find({}, {"_id": 0})
+    result = db["posts"].find({}, {"_id": 0}).sort("_id", -1)
     data = [item for item in result]
     return data
 
