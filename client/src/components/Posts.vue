@@ -1,7 +1,7 @@
 <template>
 	<div class="w-full flex justify-center">
 		<div v-if="loading">Loading...</div>
-		<div v-else class="w-full grid-container">
+		<div v-else class="w-full max-w-[64rem] grid-container">
 			<div v-for="item in data" :key="item._id">
 				<ImageCard :imageUrl="item.imageUrl" :description="item.description" />
 			</div>
